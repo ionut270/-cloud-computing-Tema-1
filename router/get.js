@@ -12,7 +12,6 @@ module.exports = (req,res)=>{
         query = processed
     }
 
-
     switch(url){
         case 'file':
             if(query & query.path){
@@ -27,7 +26,7 @@ module.exports = (req,res)=>{
 
         case '/':
             break;
-            
+
         default:
             res.statusCode = 404;
             res.setHeader("Content-Type", "text/plain");

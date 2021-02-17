@@ -1,4 +1,5 @@
 require("dotenv").config();
+require("./utils/database");
 
 const fs    = require("fs");
 const http  = require("http");

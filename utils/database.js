@@ -5,7 +5,7 @@ const client = new MongoClient(uri,{useUnifiedTopology: true});
 async function mongoConnect() {
   try {
     await client.connect();
-    console.log("~~~ Connected to mongoDB");
+    console.log("~~~  Connected to mongoDB  ~~~");
   } catch (e) {
     console.error(e);
   }

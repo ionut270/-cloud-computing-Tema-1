@@ -1,35 +1,25 @@
 const fs = require('fs');
 
-
 module.exports = (req,res)=>{
-    //process query
-    var url     = req.url.split(/\?/)[0];
-    var query   = req.url.split(/\?/)[1];
-
-    if(query){ // process the query
-        var processed = {};
-        query.split(/&/).map(p=> processed[p.split(/=/)[0]] = p.split(/=/)[1] )
-        query = processed
-    }
-
-    switch(url){
-        case 'file':
-            if(query & query.path){
+    switch(req.url){
+        case '/file':
+            if(req.query && req.query.path){
                 res.statusCode = 200;
-                fs.createReadStream(`./client/assets/${query.path}`).pipe(res);
+                fs.createReadStream(`./client/${decodeURIComponent(req.query.path)}`).pipe(res);
             } else {
                 res.statusCode = 404;
-                res.setHeader("Content-Type", "text/plain");
-                res.end(JSON.stringify({ err : "Not path provided", data : "Invalid path"}));
+                res.setHeader("Content-Type", "application/json");
+                res.end(JSON.stringify({ err : "No path provided", data : "Invalid path"}));
             }
             break;
-
         case '/':
+            res.statusCode = 200;
+            fs.createReadStream(`./client/index.html`, 'utf8').pipe(res);
             break;
 
         default:
             res.statusCode = 404;
-            res.setHeader("Content-Type", "text/plain");
+            res.setHeader("Content-Type", "application/json");
             res.end(JSON.stringify({ err : "Not found !", data : "Route not implemented"}));
             break;
     }

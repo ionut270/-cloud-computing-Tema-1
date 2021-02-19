@@ -1,0 +1,45 @@
+<html>
+  <style>
+    body,
+    content {
+      display: flex;
+      flex-flow: column;
+      justify-content: center;
+      align-items: center;
+      min-width: 100vw;
+      min-height: 100vh;
+    }
+    .app_input {
+      width: 40vw;
+    }
+    .sentence {
+      display: flex;
+      flex-flow: column;
+      justify-content: center;
+      align-items: center;
+      padding: 1em;
+      border: black;
+      border-style: double;
+      margin-top: 1em;
+      margin-left: 4em;
+      margin-right: 4em;
+    }
+    .tone_label {
+      background-color: #f6f6f6;
+      padding: 0.4em;
+      border-radius: 6px;
+      border-style: dotted;
+    }
+  </style>
+  <head>
+    <script src="/file?path=index.js"></script>
+  </head>
+  <body onload="start()">
+    <h1>Redit thread analizer</h1>
+    <div>
+      <label>Reddit url :&nbsp;</label><input class="app_input" type="text" />
+      <button onClick="analize()">Submit</button>
+    </div>
+    <div id="content"></div>
+  </body>
+</html>

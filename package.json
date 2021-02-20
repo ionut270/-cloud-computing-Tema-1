@@ -4,13 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start":"node server.js"
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^8.2.0",
     "mongodb": "^3.6.4",
-    "request": "^2.88.2"
+    "node-fetch": "^2.6.1"
   }
 }

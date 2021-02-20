@@ -8,3 +8,4 @@ module.exports.rssContent = (text) =>{
     text.split('</content>').map(a=>a.split('<content type="html">')[1] ? response += a.split('<content type="html">')[1] + ' ' : null)
     return response;
 }
+

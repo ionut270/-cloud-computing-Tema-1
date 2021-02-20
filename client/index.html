@@ -1,7 +1,6 @@
 <html>
   <style>
-    body,
-    content {
+    body {
       display: flex;
       flex-flow: column;
       justify-content: center;
@@ -9,7 +8,14 @@
       min-width: 100vw;
       min-height: 100vh;
     }
-    .app_input {
+    #content {
+      display: flex;
+      flex-flow: column;
+      justify-content: center;
+      align-items: center;
+      min-width: 100vw;
+    }
+    #app_input {
       width: 40vw;
     }
     .sentence {
@@ -23,12 +29,24 @@
       margin-top: 1em;
       margin-left: 4em;
       margin-right: 4em;
+      animation: slide-top 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
     }
     .tone_label {
       background-color: #f6f6f6;
       padding: 0.4em;
       border-radius: 6px;
       border-style: dotted;
+    }
+
+    @keyframes slide-top {
+      0% {
+        -webkit-transform: translateY(800px);
+        transform: translateY(800px);
+      }
+      100% {
+        -webkit-transform: translateY(0px);
+        transform: translateY(0px);
+      }
     }
   </style>
   <head>
@@ -37,7 +55,7 @@
   <body onload="start()">
     <h1>Redit thread analizer</h1>
     <div>
-      <label>Reddit url :&nbsp;</label><input class="app_input" type="text" />
+      <label>Reddit url :&nbsp;</label><input id="app_input" type="text" />
       <button onClick="analize()">Submit</button>
     </div>
     <div id="content"></div>

@@ -13,12 +13,12 @@ http.createServer((req, res) => {
     switch(req.method){
         case "GET":
             //~~~ query parse ~~~
-            if(req.url.split(/\\?/)[1]){ // process the query
+            if(req.url.split(/\?/)[1]){ // process the query
                 var processed = {};
-                req.url.split(/\\?/)[1].split(/&/).map(p=> processed[p.split(/=/)[0]] = p.split(/=/)[1] )
+                req.url.split(/\?/)[1].split(/&/).map(p=> processed[p.split(/=/)[0]] = p.split(/=/)[1] )
                 req.query = processed
             }
-            req.url = req.url.split(/\\?/)[0];
+            req.url = req.url.split(/\?/)[0];
             //~~~ query parse ~~~
             require('./router/get')(req,res);
             break;

@@ -1,12 +1,15 @@
 const fs                        = require('fs');
 const myFs                      = require('../utils/fileUtils');
-const fetch                     = require('node-fetch')
+const fetch                     = require('node-fetch');
+const metrics                   = require('../utils/metrics');
 const { innerText, rssContent } = require('../utils/utils');
 
-module.exports = (req, res) => {
+module.exports = async (req, res) => {
     switch (req.url) {
         case '/analize':
 
+            //console.log(`[analize] Got request to analize ${req.body.url} !`);
+            
             //GET rss feed & parse it
             fetch(`${req.body.url}/.rss`, { method: 'GET' })
             .then(resp=>resp.text())
@@ -17,7 +20,9 @@ module.exports = (req, res) => {
                 .then(resp=>resp.json())
                 .then(async body=>{
                     var tones = {}
-                    body.sentences_tone.map((sentence, index) => {sentence.tones.map(x=>{tones[x.tone_name] ? tones[x.tone_name] +=x.score : tones[x.tone_name] = x.score;})})
+                    body.sentences_tone ? 
+                        body.sentences_tone.map((sentence, index) => {sentence.tones.map(x=>{tones[x.tone_name] ? tones[x.tone_name] +=x.score : tones[x.tone_name] = x.score;})})
+                        : null;
                     var chart = {type: "radar",data : {labels : Object.keys(tones),datasets : [{label : "texts", data : Object.values(tones)}]}}
 
                     fetch('https://quickchart.io/chart', {method:"POST", headers: {'Content-Type': 'application/json'}, body: JSON.stringify({c : chart})})
@@ -41,6 +46,13 @@ module.exports = (req, res) => {
 
                 }).catch(e=>{console.error(e)});
             }).catch(e=>{console.error(e)});
+            
+            break;
+        case '/metrics':
+            var data = await metrics.get();
+            res.statusCode = 200;
+            res.setHeader("Content-Type", "application/json");
+            res.end(JSON.stringify(data));
             break;
         default:
             res.statusCode = 404;

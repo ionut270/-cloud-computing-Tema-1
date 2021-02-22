@@ -1,63 +1,25 @@
 <html>
-  <style>
-    body {
-      display: flex;
-      flex-flow: column;
-      justify-content: center;
-      align-items: center;
-      min-width: 100vw;
-      min-height: 100vh;
-    }
-    #content {
-      display: flex;
-      flex-flow: column;
-      justify-content: center;
-      align-items: center;
-      min-width: 100vw;
-    }
-    #app_input {
-      width: 40vw;
-    }
-    .sentence {
-      display: flex;
-      flex-flow: column;
-      justify-content: center;
-      align-items: center;
-      padding: 1em;
-      border: black;
-      border-style: double;
-      margin-top: 1em;
-      margin-left: 4em;
-      margin-right: 4em;
-      animation: slide-top 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-    }
-    .tone_label {
-      background-color: #f6f6f6;
-      padding: 0.4em;
-      border-radius: 6px;
-      border-style: dotted;
-    }
-
-    @keyframes slide-top {
-      0% {
-        -webkit-transform: translateY(800px);
-        transform: translateY(800px);
-      }
-      100% {
-        -webkit-transform: translateY(0px);
-        transform: translateY(0px);
-      }
-    }
-  </style>
   <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dosis:wght@600"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/file?path=index.css" />
     <script src="/file?path=index.js"></script>
   </head>
   <body onload="start()">
-    <h1>Redit thread analizer</h1>
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Reddit_logo.svg/1024px-Reddit_logo.svg.png"
+      id="logo"
+    />
+    <h1 id="logo_meta">thread analizer</h1>
     <div>
-      <label>Reddit url :&nbsp;</label><input id="app_input" type="text" />
-      <button onClick="analize()">Submit</button>
+      <label class="label">URL :&nbsp;</label><input id="app_input" type="text" />
+      <button onClick="analize()" class="submit_button">Submit</button>
     </div>
+    <div id="loader"></div>
     <div id="content"></div>
+
   </body>
 </html>

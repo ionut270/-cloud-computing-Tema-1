@@ -7,7 +7,8 @@ http.createServer((req, res) => {
     
     // ~~~ metrics ~~~
     const startPoint = Date.now();
-    res.on("finish", () => req.url !== "/metrics" ? metrics.add({path: req.url, method: req.method, status: res.statusCode, dateTime: startPoint, duration: Date.now() - startPoint }) : 0 );
+    res.on("finish", () => req.url !== "/metrics" ? 
+    metrics.add({path: req.url, method: req.method, status: res.statusCode, dateTime: startPoint, duration: Date.now() - startPoint }) : 0 );
     // ~~~ metrics ~~~
 
     switch(req.method){
@@ -19,7 +20,7 @@ http.createServer((req, res) => {
                 req.query = processed
             }
             req.url = req.url.split(/\?/)[0];
-            //~~~ query parse ~~~
+            //~~~ query parse ~~~##
             require('./router/get')(req,res);
             break;
         case "POST":
@@ -27,7 +28,7 @@ http.createServer((req, res) => {
             let body = [];
             req.on('data', (chunk) => {body.push(chunk);}).on('end', () => {
                 req.body = Buffer.concat(body).toString();
-                req.body = JSON.parse(req.body);
+                req.body ? req.body = JSON.parse(req.body) : null;
                 require('./router/post')(req,res);
             });
             //~~~ body-parse ~~~

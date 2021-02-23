@@ -50,6 +50,13 @@ module.exports = async (req, res) => {
             break;
         case '/metrics':
             var data = await metrics.get();
+
+            var average = 0;
+            data.map(x =>average += x.duration)
+            average = average/data.length;
+
+            data.push({average: average});
+
             res.statusCode = 200;
             res.setHeader("Content-Type", "application/json");
             res.end(JSON.stringify(data));

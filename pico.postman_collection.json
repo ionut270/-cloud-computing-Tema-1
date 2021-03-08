@@ -1,0 +1,316 @@
+{
+	"info": {
+		"_postman_id": "cca077eb-72b6-4600-9000-10942526aee3",
+		"name": "pico URL",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET",
+			"item": [
+				{
+					"name": "html",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080"
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getFile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/file?path=logo.png",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"file"
+							],
+							"query": [
+								{
+									"key": "path",
+									"value": "logo.png"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "redirect",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/r/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"r",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1234"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "POST",
+			"item": [
+				{
+					"name": "new URL",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"url\":\"http://google.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/new",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"new"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "blacklist",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "auth",
+								"value": "1234",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"url\": \"http://google.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/blacklist",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"blacklist"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PUT",
+			"item": [
+				{
+					"name": "renew",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"pass\":\"fiktu5aavz4ayzlmd8yn6gz5jeodmhvp\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/renew/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"renew",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "j3fs7e51"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change_url",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"pass\":\"fiktu5aavz4ayzlmd8yn6gz5jeodmhvp\",\r\n    \"url\":\"https://google.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/change_url/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"change_url",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "j3fs7e51"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DELETE",
+			"item": [
+				{
+					"name": "url",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"pass\":\"fiktu5aavz4ayzlmd8yn6gz5jeodmhvp\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/url/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"url",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "j3fs7e51"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "domain",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "auth",
+								"value": "1234",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"domain\": \"google.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/domain",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"domain"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deblacklist",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/deblacklist",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"deblacklist"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

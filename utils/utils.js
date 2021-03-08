@@ -17,3 +17,9 @@ module.exports.queryParse = (req) => {
 	req.url = req.url.split(/\?/)[0];
     return req;
 };
+module.exports.sendErr=(res,status,err)=>{
+	res.statusCode = status;
+	res.setHeader("Content-Type", "application/json");
+	res.end(JSON.stringify(err)); 
+}
+module.exports.id_regExp = /^[a-z0-9]{4,8}$/i

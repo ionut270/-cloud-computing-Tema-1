@@ -1,48 +1,70 @@
-const fs        = require('fs');
-const utils     = require('../utils/utils');
-const mongo     = require('../utils/database').client();
-const db        = mongo.db('picourl').collection('urlList');
+const fs                        = require('fs');
+const myFs                      = require('../utils/fileUtils');
+const fetch                     = require('node-fetch');
+const metrics                   = require('../utils/metrics');
+const { innerText, rssContent } = require('../utils/utils');
 
+module.exports = async (req, res) => {
+    switch (req.url) {
+        case '/analize':
 
-module.exports= (req,res)=>{
-    switch(req.url){
-        case '/new':
-            // check that url is not blacklisted
-            mongo.db('picourl').collection('blacklist').findOne({_id:req.body.url},(err,data)=>{
-                if(err) utils.sendErr(res,500,{ err : "error on db data retrival", data : err})
-                else if(data) utils.sendErr(res,404,{ err : "Client Err", data : "The provided url is blacklisted"})
-                else {
-                    //generate an id and return the data
-                    var id     = generate(Math.floor(Math.random()*5+4));
-                    var pass   = generate(Math.floor(Math.random()*5+32));
-                    
-                    var domain = req.body.url.match(/https?:\/\//) ? req.body.url.split(/https?:\/\//)[1].split(/\//)[0] : req.body.url.split(/\//)[0] 
-                    var timeout= Date.now() + 1000 * 60 * 60 * 24 // remove the url after 24h ..
+            //console.log(`[analize] Got request to analize ${req.body.url} !`);
+            
+            //GET rss feed & parse it
+            fetch(`${req.body.url}/.rss`, { method: 'GET' })
+            .then(resp=>resp.text())
+            .then(body=>{
 
-                    db.insertOne({ id:id, pass:pass, url:req.body.url, timeout: timeout, domain: domain },(err)=>{
-                        if(err) utils.sendErr(res,500,{ err : "error on db data insertion", data : err})
-                        else { res.statusCode = 200; res.end(JSON.stringify({"url":`${process.env.APP_HOST}/r/${id}`,pass:pass, msg: `The url will expire on ${new Date(timeout)}`})) }
+                //Run tone analizer over the text 
+                fetch(`${process.env.TONE_ANALIZER_URL}/v3/tone?version=2017-09-21`, { method: 'POST', headers: { Authorization: `Basic ${process.env.TONE_ANALIZER_KEY}` }, body: JSON.stringify({ text: innerText(rssContent(body)) }) })
+                .then(resp=>resp.json())
+                .then(async body=>{
+                    var tones = {}
+                    body.sentences_tone ? 
+                        body.sentences_tone.map((sentence, index) => {sentence.tones.map(x=>{tones[x.tone_name] ? tones[x.tone_name] +=x.score : tones[x.tone_name] = x.score;})})
+                        : null;
+                    var chart = {type: "radar",data : {labels : Object.keys(tones),datasets : [{label : "texts", data : Object.values(tones)}]}}
+
+                    fetch('https://quickchart.io/chart', {method:"POST", headers: {'Content-Type': 'application/json'}, body: JSON.stringify({c : chart})})
+                    .then(resp=>{
+                        const file = `./download/${'_' + Math.random().toString(36).substr(2, 9)}.png`
+                        const fileStream = fs.createWriteStream(file);
+                        resp.body.pipe(fileStream);
+                        fileStream.on("finish", async () => {
+                            //read the image, delete it and encode it base64
+                            const img = await myFs.readFile(file);
+                                        await myFs.removeFile(file);
+
+                            //convert image buffer to base64
+                            body.chart = new Buffer.from(img).toString('base64');
+
+                            res.statusCode = 200;
+                            res.setHeader("Content-Type", "application/json");
+                            res.end(JSON.stringify(body));
+                        });
                     })
-                }
-            })
+
+                }).catch(e=>{console.error(e)});
+            }).catch(e=>{console.error(e)});
+            
             break;
-        case '/blacklist':
-            if(req.headers.auth === process.env.TOKEN){
-                mongo.db('picourl').collection('blacklist').insertOne({_id:req.body.url},(err)=>{
-                    if(err) utils.sendErr(res,500,{ err : "error on db data insertion", data : err})
-                    else { db.deleteMany({url:req.body.url}); res.statusCode = 200; res.end(JSON.stringify({"status":"Sucess !" }))}
-                })
-            } else utils.sendErr(res,404,{ err : "Client Err", data : "You do not have acess to this request"})
+        case '/metrics':
+            var data = await metrics.get();
+
+            var average = 0;
+            data.map(x =>average += x.duration)
+            average = average/data.length;
+
+            data.push({average: average});
+
+            res.statusCode = 200;
+            res.setHeader("Content-Type", "application/json");
+            res.end(JSON.stringify(data));
             break;
         default:
-            utils.sendErr(res,404,{ err : "Not found !", data : "Route not implemented"})
+            res.statusCode = 404;
+            res.setHeader("Content-Type", "application/json");
+            res.end(JSON.stringify({ err: "Not found !", data: "Route not implemented" }));
             break;
     }
-}
-
-function generate(count) {
-    var _sym = 'abcdefghijklmnopqrstuvwxyz1234567890'
-    var str = '';
-    for(var i = 0; i < count; i++) str += _sym[parseInt(Math.random() * (_sym.length))];
-    return str;
 }

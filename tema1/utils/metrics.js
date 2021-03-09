@@ -1,5 +1,5 @@
 const mongo = require('./database').client();
-const db    = mongo.db('picourl').collection('metrics');
+const db    = mongo.db('tema_1').collection('metrics');
 
 function getMetrics(){
     return new Promise((resolve,reject)=>{

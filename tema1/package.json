@@ -1,24 +1,17 @@
 {
-  "name": "-cloud-computing-tema-1",
+  "name": "",
   "version": "1.0.0",
-  "description": "Create an application that provides a RESTFul API",
+  "description": "",
   "main": "index.js",
-  "dependencies": {
-    "dotenv": "^8.2.0",
-    "mongodb": "^3.6.4"
-  },
-  "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ionut270/-cloud-computing-Tema-1.git"
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ionut270/-cloud-computing-Tema-1/issues"
-  },
-  "homepage": "https://github.com/ionut270/-cloud-computing-Tema-1#readme"
+  "dependencies": {
+    "async": "^3.2.0",
+    "dotenv": "^8.2.0",
+    "mongodb": "^3.6.4",
+    "node-fetch": "^2.6.1"
+  }
 }

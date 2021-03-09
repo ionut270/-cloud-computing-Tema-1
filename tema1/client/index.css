@@ -1,0 +1,113 @@
+body {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 100vw;
+  margin: 0;
+  min-height: 100vh;
+  background-color: #eff7ff;
+  overflow-x: hidden;
+}
+#content {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 4em;
+  background-color: white;
+  border-radius: 10px;
+  margin-top: 3em;
+  max-width: 80%;
+}
+#app_input {
+  width: 40vw;
+  font-size: 20px;
+  border-radius: 10px;
+}
+#app_input:focus {
+  width: 40vw;
+  font-size: 20px;
+  border-radius: 10px;
+}
+.sentence {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1em;
+  border: black;
+  border-radius: 10px;
+  border-style: double;
+  margin-top: 1em;
+  margin-left: 4em;
+  margin-right: 4em;
+  animation: slide-top 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+.tone_label {
+  background-color: #f6f6f6;
+  padding: 0.4em;
+  border-radius: 10px;
+  border-style: dotted;
+}
+
+@keyframes slide-top {
+  0% {
+    -webkit-transform: translateY(800px);
+    transform: translateY(800px);
+  }
+  100% {
+    -webkit-transform: translateY(0px);
+    transform: translateY(0px);
+  }
+}
+#loader {
+  display: none;
+  margin: 1em;
+  border: 16px solid #eff7ff;
+  border-top: 16px solid #ff5700;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: slide-top 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+#logo {
+  width: 200px;
+  margin-top: 3em;
+}
+#logo_meta {
+  font-family: "Dosis", sans-serif;
+  font-size: 35px;
+  margin-top: 0.1em;
+  color: #222222;
+}
+.label,
+.submit_button {
+  font-family: "Dosis", sans-serif;
+  color: #ff5700;
+  font-size: 20px;
+}
+.submit_button {
+  border-radius: 10px;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+.app_logo {
+  min-width: 100vw;
+  display: flex;
+  justify-content: center;
+  flex-flow: column;
+  align-items: center;
+  padding-top: 3em;
+  padding-bottom: 3em;
+}

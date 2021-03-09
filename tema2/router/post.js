@@ -19,6 +19,8 @@ module.exports= (req,res)=>{
                     var domain = req.body.url.match(/https?:\/\//) ? req.body.url.split(/https?:\/\//)[1].split(/\//)[0] : req.body.url.split(/\//)[0] 
                     var timeout= Date.now() + 1000 * 60 * 60 * 24 // remove the url after 24h ..
 
+                    req.body.url = req.body.url.match(/https?:\/\//) ? req.body.url : `http://${req.body.url}`
+
                     db.insertOne({ id:id, pass:pass, url:req.body.url, timeout: timeout, domain: domain },(err)=>{
                         if(err) utils.sendErr(res,500,{ err : "error on db data insertion", data : err})
                         else { res.statusCode = 200; res.end(JSON.stringify({"url":`${process.env.APP_HOST}/r/${id}`,pass:pass, msg: `The url will expire on ${new Date(timeout)}`})) }

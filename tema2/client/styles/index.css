@@ -13,5 +13,12 @@ body, .main{
     width: 290px;
 }
 .small_text{
-    bottom: 0;
+    bottom: 1em;
+    position: fixed;
+}
+#response{
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
 }

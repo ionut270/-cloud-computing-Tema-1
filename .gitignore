@@ -1,2 +1,6 @@
-node_modules
-package-lock.json
+tema1/node_modules
+tema1/package-lock.json
+tema1/env
+
+tema2/node_modules
+tema2/package-lock.json
